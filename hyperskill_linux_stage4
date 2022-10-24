@@ -25,11 +25,11 @@ function add_def {
 #        value=$value_f
 #      done
 #      echo "Result: $(bc -l <<<$num*$value)"
-        num_lines=$(wc -l < definitions.txt)
-        add_sn=$((num_lines + 1))
-        prefix="$add_sn".
+#        num_lines=$(wc -l < definitions.txt)
+#        add_sn=$((num_lines + 1))
+#        prefix="$add_sn".
         line="${user_input[*]}"
-        echo "$prefix" "$line" >> "$file_name"
+        echo "$line" >> "$file_name"
     else
       echo "The definition is incorrect!"
       add_def
@@ -39,7 +39,7 @@ function add_def {
 function del_def {
     if [ -s definitions.txt ]; then
         echo "Type the line number to delete or '0' to return"
-        cat $file_name
+        awk 'BEGIN{i=1} /.*/{printf "%d. % s\n",i,$0; i++}' $file_name
         num_lines=$(wc -l < definitions.txt)
         read line_del_num
         while [ $line_del_num -gt $num_lines ] || [ -z $line_del_num ] || [[ "$line_del_num" == "" ]]
